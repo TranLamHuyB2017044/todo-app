@@ -51,19 +51,15 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
         ]);
 
-        $product->update($data);
+        $product->update($validated);
 
-        if ($request->expectsJson()) {
-            return response()->json(['message' => 'Updated', 'data' => $product]);
-        }
-
-        return redirect()->back();
+        return redirect()->route('products.index')->with('success', 'Cập nhật sản phẩm thành công');
     }
 
     public function destroy(Request $request, Product $product)
