@@ -44,6 +44,11 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
     public function update(Request $request, Product $product)
     {
         $data = $request->validate([

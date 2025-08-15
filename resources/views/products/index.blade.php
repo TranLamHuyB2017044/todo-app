@@ -115,16 +115,20 @@
             }
             products.forEach(p => {
                 tableBody.append(`
-                <tr id="product-${p.id}" class="hover:bg-slate-50">
-                    <td class="p-4 border-b">${p.name}</td>
-                    <td class="p-4 border-b">${p.quantity}</td>
-                    <td class="p-4 border-b">${Number(p.price).toLocaleString()}₫</td>
-                    <td class="p-4 border-b">${(p.price * p.quantity).toLocaleString()}₫</td>
-                    <td class="p-4 border-b text-right">
-                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700">X</button>
-                    </td>
-                </tr>
-            `);
+        <tr id="product-${p.id}" class="hover:bg-slate-50">
+            <td class="p-4 border-b">
+                <a href="/products/${p.id}/edit" class="text-sky-600 hover:underline">
+                    ${p.name}
+                </a>
+            </td>
+            <td class="p-4 border-b">${p.quantity}</td>
+            <td class="p-4 border-b">${Number(p.price).toLocaleString()}₫</td>
+            <td class="p-4 border-b">${(p.price * p.quantity).toLocaleString()}₫</td>
+            <td class="p-4 border-b text-right">
+                <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700">X</button>
+            </td>
+        </tr>
+    `);
             });
         }
 
