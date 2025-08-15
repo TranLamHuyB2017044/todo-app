@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
 
+Route::resource('products', ProductController::class);
 
-Route::get('/', [TaskController::class, 'index']);
-Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+Route::get('/', [ProductController::class, 'index']);
+Route::view('/login', 'auth.login')->name('login');
+Route::view('/register', 'auth.register')->name('register');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
