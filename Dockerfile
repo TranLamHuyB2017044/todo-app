@@ -1,21 +1,37 @@
 FROM php:8.2-apache
 
-# Cài extension cần thiết
-RUN docker-php-ext-install pdo pdo_mysql
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    libzip-dev
 
-# Copy toàn bộ source vào container
-COPY . /var/www/html
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-# Set quyền
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Apache document root => trỏ vào public
+# Copy project
 WORKDIR /var/www/html
-RUN sed -i 's|/var/www/html|/var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+COPY . .
 
-# Enable rewrite (Laravel cần mod_rewrite)
-RUN a2enmod rewrite
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
+# Apache config: point to /public
+RUN sed -i 's|/var/www/html|/var/www/html/public|' /etc/apache2/sites-available/000-default.conf \
+    && a2enmod rewrite
 
 EXPOSE 80
 CMD ["apache2-foreground"]
