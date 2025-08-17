@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: laravel-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: mysql
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: todo_app
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: password
+
+  - type: pserv
+    name: mysql
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile-mysql
+    dockerContext: .
