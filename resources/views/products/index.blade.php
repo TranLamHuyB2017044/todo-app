@@ -46,7 +46,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700">Price (VND)</label>
-                        <input type="number" name="price" step="1000" min="0" class="w-full border rounded px-3 py-2" required>
+                        <input type="number" name="price" min="0" class="w-full border rounded px-3 py-2" required>
                     </div>
                     <button type="submit" class="bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600 w-full">
                         Add Product
@@ -80,7 +80,7 @@
                                 <th class="p-4"></th>
                             </tr>
                         </thead>
-                        <tbody id="productTableBody"></tbody>
+                        <tbody  id="productTableBody"></tbody>
                     </table>
                 </div>
             </div>

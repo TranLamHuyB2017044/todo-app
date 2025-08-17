@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Danh sách sản phẩm
+    
     // App\Http\Controllers\ProductController.php
 
     public function index(Request $request)
